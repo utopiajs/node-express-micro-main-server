@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': 0,
     'no-param-reassign': 0,
-    'consistent-return': 0
+    'consistent-return': 0,
+    'func-names': 0
   }
 };
