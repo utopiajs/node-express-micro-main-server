@@ -26,7 +26,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/register:
+ * /auth/register:
  *   post:
  *     summary: Register as user
  *     tags: [Auth]
@@ -74,7 +74,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/login:
+ * /auth/login:
  *   post:
  *     summary: Login
  *     tags: [Auth]
@@ -122,7 +122,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/logout:
+ * /auth/logout:
  *   post:
  *     summary: Logout
  *     tags: [Auth]
@@ -148,7 +148,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/refresh-tokens:
+ * /auth/refresh-tokens:
  *   post:
  *     summary: Refresh auth tokens
  *     tags: [Auth]
@@ -178,7 +178,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/forgot-password:
+ * /auth/forgot-password:
  *   post:
  *     summary: Forgot password
  *     description: An email will be sent to reset password.
@@ -206,7 +206,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/reset-password:
+ * /auth/reset-password:
  *   post:
  *     summary: Reset password
  *     tags: [Auth]
@@ -249,7 +249,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/send-verification-email:
+ * /auth/send-verification-email:
  *   post:
  *     summary: Send verification email
  *     description: An email will be sent to verify email.
@@ -265,7 +265,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /micro-main/auth/verify-email:
+ * /auth/verify-email:
  *   post:
  *     summary: verify email
  *     tags: [Auth]
