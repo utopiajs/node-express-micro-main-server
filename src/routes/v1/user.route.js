@@ -13,9 +13,11 @@ router
 
 router
   .route('/:userId')
-  .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+
+// get user info by user id
+router.get('/info', auth('getUsers'), validate(userValidation.getUser), userController.getUser);
 
 module.exports = router;
 
@@ -149,33 +151,6 @@ module.exports = router;
 /**
  * @swagger
  * /users/{id}:
- *   get:
- *     summary: Get a user
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User id
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/User'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
- *
  *   patch:
  *     summary: Update a user
  *     description: Logged in users can only update their own information. Only admins can update other users.
