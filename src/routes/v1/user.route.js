@@ -8,7 +8,6 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
 router
@@ -18,6 +17,7 @@ router
 
 // get user info by user id
 router.get('/info', auth('getUsers'), validate(userValidation.getUser), userController.getUser);
+router.post('/create', auth('manageUsers'), validate(userValidation.createUser), userController.createUser);
 
 module.exports = router;
 
