@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
-    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js --config nodemon.json",
     "lint:es": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "keywords": [
