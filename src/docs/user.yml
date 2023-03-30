@@ -147,3 +147,52 @@
         $ref: "#/components/responses/Unauthorized"
       "403":
         $ref: "#/components/responses/Forbidden"
+
+/users/update:
+  patch:
+    summary: Update a user
+    description: Logged in users can only update their own information. Only admins can update other users.
+    tags: [Users]
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: User id
+              name:
+                type: string
+              email:
+                type: string
+                format: email
+                description: must be unique
+              password:
+                type: string
+                format: password
+                minLength: 8
+                description: At least one number and one letter
+            example:
+              userId: 642016423654b518ede27a3a
+              name: fake name
+              email: fake@example.com
+              password: password1
+    responses:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/User'
+      "400":
+        $ref: '#/components/responses/DuplicateEmail'
+      "401":
+        $ref: '#/components/responses/Unauthorized'
+      "403":
+        $ref: '#/components/responses/Forbidden'
+      "404":
+        $ref: '#/components/responses/NotFound'
