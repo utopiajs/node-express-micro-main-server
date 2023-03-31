@@ -15,20 +15,20 @@
         schema:
           type: string
     responses:
-      "200":
+      '200':
         description: OK
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
-    "400":
-      $ref: "#/components/responses/DuplicateEmail"
-    "401":
-      $ref: "#/components/responses/Unauthorized"
-    "403":
-      $ref: "#/components/responses/Forbidden"
-    "404":
-      $ref: "#/components/responses/NotFound"
+              $ref: '#/components/schemas/User'
+    '400':
+      $ref: '#/components/responses/DuplicateEmail'
+    '401':
+      $ref: '#/components/responses/Unauthorized'
+    '403':
+      $ref: '#/components/responses/Forbidden'
+    '404':
+      $ref: '#/components/responses/NotFound'
 
 /users/create:
   post:
@@ -69,18 +69,18 @@
               password: password1
               role: user
     responses:
-      "201":
+      '201':
         description: Created
         content:
           application/json:
           schema:
-            $ref: "#/components/schemas/User"
-      "400":
-        $ref: "#/components/responses/DuplicateEmail"
-      "401":
-        $ref: "#/components/responses/Unauthorized"
-      "403":
-        $ref: "#/components/responses/Forbidden"
+            $ref: '#/components/schemas/User'
+      '400':
+        $ref: '#/components/responses/DuplicateEmail'
+      '401':
+        $ref: '#/components/responses/Unauthorized'
+      '403':
+        $ref: '#/components/responses/Forbidden'
 
 /users/list:
   get:
@@ -120,7 +120,7 @@
           default: 1
         description: Page number
     responses:
-      "200":
+      '200':
         description: OK
         content:
           application/json:
@@ -130,7 +130,7 @@
                 results:
                   type: array
                   items:
-                    $ref: "#/components/schemas/User"
+                    $ref: '#/components/schemas/User'
                 page:
                   type: integer
                   example: 1
@@ -143,10 +143,10 @@
                 totalResults:
                   type: integer
                   example: 1
-      "401":
-        $ref: "#/components/responses/Unauthorized"
-      "403":
-        $ref: "#/components/responses/Forbidden"
+      '401':
+        $ref: '#/components/responses/Unauthorized'
+      '403':
+        $ref: '#/components/responses/Forbidden'
 
 /users/update:
   patch:
@@ -182,17 +182,46 @@
               email: fake@example.com
               password: password1
     responses:
-      "200":
+      '200':
         description: OK
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/User'
-      "400":
+              $ref: '#/components/schemas/User'
+      '400':
         $ref: '#/components/responses/DuplicateEmail'
-      "401":
+      '401':
         $ref: '#/components/responses/Unauthorized'
-      "403":
+      '403':
         $ref: '#/components/responses/Forbidden'
-      "404":
+      '404':
+        $ref: '#/components/responses/NotFound'
+
+/users/delete:
+  delete:
+    summary: Delete a user
+    description: Logged in users can delete only themselves. Only admins can delete other users.
+    tags: [Users]
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: User id
+            example:
+              userId: 642457851f3d344b7c8e437a
+    responses:
+      '200':
+        description: No content
+      '401':
+        $ref: '#/components/responses/Unauthorized'
+      '403':
+        $ref: '#/components/responses/Forbidden'
+      '404':
         $ref: '#/components/responses/NotFound'

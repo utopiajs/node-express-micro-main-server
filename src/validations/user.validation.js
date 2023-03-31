@@ -38,7 +38,7 @@ const updateUser = {
 };
 
 const deleteUser = {
-  params: Joi.object().keys({
+  body: Joi.object().keys({
     userId: Joi.string().custom(objectId)
   })
 };
