@@ -1,3 +1,6 @@
+tags:
+  - name: Users
+    description: User management and retrieval
 /users/info:
   get:
     summary: Get a user
