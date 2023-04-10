@@ -13,7 +13,7 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
-const { API_PREFIX } = require('./constants/index');
+const { API_PREFIX, API_VERSION } = require('./constants/index');
 
 const app = express();
 
@@ -52,7 +52,7 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use(`${API_PREFIX}/v1`, routes);
+app.use(`${API_PREFIX}/${API_VERSION}`, routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
