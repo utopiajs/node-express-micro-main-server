@@ -24,14 +24,14 @@ tags:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
-    '400':
-      $ref: '#/components/responses/DuplicateEmail'
-    '401':
-      $ref: '#/components/responses/Unauthorized'
-    '403':
-      $ref: '#/components/responses/Forbidden'
-    '404':
-      $ref: '#/components/responses/NotFound'
+      '400':
+        $ref: '#/components/responses/DuplicateEmail'
+      '401':
+        $ref: '#/components/responses/Unauthorized'
+      '403':
+        $ref: '#/components/responses/Forbidden'
+      '404':
+        $ref: '#/components/responses/NotFound'
 
 /users/create:
   post:
@@ -76,8 +76,8 @@ tags:
         description: Created
         content:
           application/json:
-          schema:
-            $ref: '#/components/schemas/User'
+            schema:
+              $ref: '#/components/schemas/User'
       '400':
         $ref: '#/components/responses/DuplicateEmail'
       '401':

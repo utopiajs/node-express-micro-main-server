@@ -92,7 +92,6 @@ tags:
                 code: 401
                 message: Invalid email or password
 
-
 /auth/logout:
   post:
     summary: User Logout
