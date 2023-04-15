@@ -1,0 +1,38 @@
+
+tags:
+  - name: Commons
+    description: Common apis, eg.static
+
+/common/static/bing-img:
+  get:
+    summary: Get bing wallpaper
+    tags: [Commons]
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: query
+        name: dayIndex
+        description: 表示请求的天数序列,0代表今天、1代表昨天…以此类推(只支持最近7天)，默认为0
+        schema:
+          type: number
+      - in: query
+        name: days
+        description: 请求的天数数量，默认为1
+        schema:
+          type: number
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BingImg'
+      '401':
+        $ref: '#/components/responses/Unauthorized'
+      '403':
+        $ref: '#/components/responses/Forbidden'
