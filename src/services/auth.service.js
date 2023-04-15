@@ -4,6 +4,15 @@ const userService = require('./user.service');
 const Token = require('../models/token.model');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
+const {
+  COMMON_USER_CENTER_MODULE_CODE,
+  COMMON_AUTH_MODULE_CODE,
+  ERROR_UNAUTHENTICATE_CODE,
+  ERROR_TOKEN_NOT_FOUND_CODE,
+  ERROR_RESET_FAILED_CODE,
+  ERROR_VERIFICATION_FAILED_CODE,
+  ERROR_RES_NOT_FOUND_CODE
+} = require('../constants/error-code');
 
 /**
  * Login with username and password
@@ -14,7 +23,9 @@ const { tokenTypes } = require('../config/tokens');
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
   if (!user || !(await user.isPasswordMatch(password))) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password', {
+      errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_UNAUTHENTICATE_CODE}`
+    });
   }
   return user;
 };
@@ -27,7 +38,9 @@ const loginUserWithEmailAndPassword = async (email, password) => {
 const logout = async (refreshToken) => {
   const refreshTokenDoc = await Token.findOne({ token: refreshToken, type: tokenTypes.REFRESH, blacklisted: false });
   if (!refreshTokenDoc) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Not found', {
+      errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_TOKEN_NOT_FOUND_CODE}`
+    });
   }
   await refreshTokenDoc.remove();
 };
@@ -47,7 +60,9 @@ const refreshAuth = async (refreshToken) => {
     await refreshTokenDoc.remove();
     return tokenService.generateAuthTokens(user);
   } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate', {
+      errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_UNAUTHENTICATE_CODE}`
+    });
   }
 };
 
@@ -67,7 +82,9 @@ const resetPassword = async (resetPasswordToken, newPassword) => {
     await userService.updateUserById(user.id, { password: newPassword });
     await Token.deleteMany({ user: user.id, type: tokenTypes.RESET_PASSWORD });
   } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed');
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed', {
+      errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_RESET_FAILED_CODE}`
+    });
   }
 };
 
@@ -81,12 +98,16 @@ const verifyEmail = async (verifyEmailToken) => {
     const verifyEmailTokenDoc = await tokenService.verifyToken(verifyEmailToken, tokenTypes.VERIFY_EMAIL);
     const user = await userService.getUserById(verifyEmailTokenDoc.user);
     if (!user) {
-      throw new Error();
+      throw new ApiError(httpStatus.NOT_FOUND, 'User not found', {
+        errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_RES_NOT_FOUND_CODE}`
+      });
     }
     await Token.deleteMany({ user: user.id, type: tokenTypes.VERIFY_EMAIL });
     await userService.updateUserById(user.id, { isEmailVerified: true });
   } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed');
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed', {
+      errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_VERIFICATION_FAILED_CODE}`
+    });
   }
 };
 

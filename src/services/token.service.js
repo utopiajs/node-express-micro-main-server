@@ -6,6 +6,7 @@ const userService = require('./user.service');
 const { Token } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
+const { COMMON_USER_CENTER_MODULE_CODE, COMMON_AUTH_MODULE_CODE, ERROR_RES_NOT_FOUND_CODE } = require('../constants/error-code');
 
 /**
  * Generate token
@@ -55,7 +56,9 @@ const verifyToken = async (token, type) => {
   const payload = jwt.verify(token, config.jwt.secret);
   const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false });
   if (!tokenDoc) {
-    throw new Error('Token not found');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Token not found', {
+      errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_RES_NOT_FOUND_CODE}`
+    });
   }
   return tokenDoc;
 };
@@ -93,7 +96,9 @@ const generateAuthTokens = async (user) => {
 const generateResetPasswordToken = async (email) => {
   const user = await userService.getUserByEmail(email);
   if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email');
+    throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email', {
+      errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_RES_NOT_FOUND_CODE}`
+    });
   }
   const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
   const resetPasswordToken = generateToken(user.id, expires, tokenTypes.RESET_PASSWORD);
