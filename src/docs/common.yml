@@ -12,12 +12,12 @@ tags:
     parameters:
       - in: query
         name: dayIndex
-        description: 表示请求的天数序列,0代表今天、1代表昨天…以此类推(只支持最近7天)，默认为0
+        description: 表示请求的天数序列,0代表今天、1代表昨天…以此类推(只支持最近7天)，默认为0，范围0-7
         schema:
           type: number
       - in: query
         name: days
-        description: 请求的天数数量，默认为1
+        description: 请求的天数数量，默认为1，范围1-8
         schema:
           type: number
     responses:
