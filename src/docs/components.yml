@@ -38,7 +38,29 @@ components:
           $ref: '#/components/schemas/Token'
         refresh:
           $ref: '#/components/schemas/Token'
-
+    
+    BingImg:
+      type: object
+      properties:
+        startdate:
+          type: string
+        fullstartdate:
+          type: string
+        enddate:
+          type: string
+        url:
+          type: string
+        urlbase:
+          type: string
+        copyright:
+          type: string
+        copyrightlink:
+          type: string
+        quiz:
+          type: string
+        wp:
+          type: string
+        
     Error:
       type: object
       properties:

@@ -26,12 +26,10 @@ tags:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                data:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/BingImg'
+              type: array
+              items:
+                $ref: '#/components/schemas/BingImg'
+                  
       '401':
         $ref: '#/components/responses/Unauthorized'
       '403':
