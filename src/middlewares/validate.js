@@ -14,7 +14,7 @@ const validate = (schema) => (req, res, next) => {
   if (error) {
     const errorMessage = error.details.map((details) => details.message).join(', ');
     return next(
-      new ApiError(httpStatus.BAD_REQUEST, errorMessage, {
+      new ApiError(httpStatus.BAD_REQUEST, `参数校验错误：${errorMessage}`, {
         errorCode: `${MODULE_CODE}${ERROR_VERIFICATION_FAILED_CODE}`
       })
     );
