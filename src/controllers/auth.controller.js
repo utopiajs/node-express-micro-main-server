@@ -15,12 +15,16 @@ const login = catchAsync(async (req, res) => {
   const tokens = await tokenService.generateAuthTokens(user);
   res.cookie('id', user.id);
   res.cookie('token', tokens.access.token);
+  res.cookie('refresh.token', tokens.refresh.token)
   res.send(handleResponse({ user, tokens }));
 });
 
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
-  res.status(httpStatus.NO_CONTENT).send(handleResponse());
+  res.clearCookie('id');
+  res.clearCookie('token');
+  res.clearCookie('refresh.token');
+  res.send(handleResponse());
 });
 
 const refreshTokens = catchAsync(async (req, res) => {
