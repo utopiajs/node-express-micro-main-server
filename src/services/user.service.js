@@ -71,7 +71,9 @@ const updateUserById = async (userId, updateBody) => {
       errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_EMAIL_REPEATED_CODE}`
     });
   }
-  Object.assign(user, updateBody);
+  // hack preferenceSetting
+  const _preferenceSetting = Object.assign(user.preferenceSetting, updateBody.preferenceSetting);
+  Object.assign(user, updateBody, { preferenceSetting: _preferenceSetting });
   await user.save();
   return user;
 };

@@ -32,7 +32,12 @@ const updateUser = {
       userId: Joi.required().custom(objectId),
       email: Joi.string().email(),
       password: Joi.string().custom(password),
-      name: Joi.string()
+      name: Joi.string(),
+      preferenceSetting: Joi.object({
+        theme: Joi.string().valid('light', 'dark'),
+        colorPrimary: Joi.string(),
+        borderRadius: Joi.number()
+      })
     })
     .min(1)
 };

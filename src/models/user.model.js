@@ -45,6 +45,14 @@ const userSchema = mongoose.Schema(
     isEmailVerified: {
       type: Boolean,
       default: false
+    },
+    preferenceSetting: {
+      type: Object,
+      default: {
+        theme: 'light',
+        colorPrimary: '#1677ff',
+        borderRadius: 6
+      }
     }
   },
   {
