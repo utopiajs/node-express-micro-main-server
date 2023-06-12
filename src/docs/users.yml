@@ -179,11 +179,25 @@ tags:
                 format: password
                 minLength: 8
                 description: At least one number and one letter
+              preferenceSetting:
+                type: object
+                properties:
+                  theme:
+                    type: string
+                    enum: ['light', 'dark']
+                  colorPrimary:
+                    type: string
+                  borderRadius:
+                    type: number
             example:
               userId: 642016423654b518ede27a3a
               name: fake name
               email: fake@example.com
               password: password1
+              preferenceSetting:
+                theme: 'light'
+                colorPrimary: '#1677ff'
+                borderRadius: 6
     responses:
       '200':
         description: OK

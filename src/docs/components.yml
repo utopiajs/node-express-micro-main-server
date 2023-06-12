@@ -13,11 +13,25 @@ components:
         role:
           type: string
           enum: [user, admin]
+        preferenceSetting:
+          type: object
+          properties:
+            theme:
+              type: string
+              enum: ['light', 'dark']
+            colorPrimary:
+              type: string
+            borderRadius:
+              type: number
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
         name: fake name
         role: user
+        preferenceSetting:
+          theme: 'light'
+          colorPrimary: '#1677ff'
+          borderRadius: 6
 
     Token:
       type: object
