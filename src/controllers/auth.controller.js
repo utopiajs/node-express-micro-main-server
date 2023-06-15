@@ -15,7 +15,7 @@ const login = catchAsync(async (req, res) => {
   const tokens = await tokenService.generateAuthTokens(user);
   res.cookie('id', user.id);
   res.cookie('token', tokens.access.token);
-  res.cookie('refresh.token', tokens.refresh.token)
+  res.cookie('refresh.token', tokens.refresh.token);
   res.send(handleResponse({ user, tokens }));
 });
 
