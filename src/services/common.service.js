@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const xml2js = require('xml2js');
 const request = require('../utils/request');
 const ApiError = require('../utils/ApiError');
+const uploadToOSS = require('../utils/uploadToOSS');
 const { THIRD_PARTY_SERVICE_EXCEPTION_MESSAGE, ERROR_SERVICE_EXCEPTION_CODE, MODULE_CODE } = require('../constants/error-code');
 
 const getStaticBingImage = async (params) => {
@@ -27,6 +28,16 @@ const getStaticBingImage = async (params) => {
   }
 };
 
+const uploadAvatarToOSS = async (params) => {
+  const res = await uploadToOSS({
+    localFile: params.file.filepath,
+    key: `avatar/${new Date().getTime()}.${params.file.originalFilename}`
+  });
+
+  return res
+};
+
 module.exports = {
-  getStaticBingImage
+  getStaticBingImage,
+  uploadAvatarToOSS
 };

@@ -7,5 +7,6 @@ const commonValidation = require('../../validations/common.validation');
 const router = express.Router();
 
 router.get('/static/bing-img', validate(commonValidation.getBingImg), commonController.getBingImageList);
+router.post('/upload/avatar', auth(), commonController.uploadAvatar);
 
 module.exports = router;
