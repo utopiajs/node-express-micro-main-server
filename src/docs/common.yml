@@ -34,3 +34,24 @@ tags:
         $ref: '#/components/responses/Unauthorized'
       '403':
         $ref: '#/components/responses/Forbidden'
+
+/common/upload/avatar:
+  post:
+    summary: 头像上传接口
+    tags: [Commons]
+    security:
+      - bearerAuth: []
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+    responses:
+      200:
+        description: 文件上传成功
+      400:
+        description: 请求参数错误
