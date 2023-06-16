@@ -121,8 +121,3 @@ components:
             code: 404
             message: Not found
 
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
