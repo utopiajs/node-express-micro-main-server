@@ -1,4 +1,5 @@
 const qiniu = require('qiniu');
+const fs = require('fs');
 const config = require('../config/config');
 
 const { accessKey, secretKey } = config.oss;
@@ -7,7 +8,7 @@ const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 // 自定义凭证有效期（示例2小时，expires单位为秒，为上传凭证的有效时间）
 const options = {
   scope: 'oss-utopia-space-sea',
-  returnBody: '{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}',
+  returnBody: '{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"name":"$(fname)"}',
   expires: 7200
 };
 const putPolicy = new qiniu.rs.PutPolicy(options);
@@ -26,7 +27,12 @@ const uploadToOSS = ({ key, localFile }) => {
       if (respErr) {
         reject(respErr, respBody);
       }
-
+      // 删除临时文件
+      fs.unlink(localFile, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
       if (respInfo.statusCode === 200) {
         reslove(respBody);
       } else {

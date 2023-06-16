@@ -23,8 +23,7 @@ const uploadAvatar = catchAsync(async (req, res, next) => {
       file: files.file
     };
     const data = await commonService.uploadAvatarToOSS(param);
-    console.log(data);
-    res.json({ fields, files, data });
+    res.json(handleResponse(data));
   });
 });
 module.exports = {
