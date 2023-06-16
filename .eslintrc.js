@@ -4,6 +4,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'no-param-reassign': 0,
     'consistent-return': 0,
-    'func-names': 0
+    'func-names': 0,
+    'no-console': ['error', { allow: ['warn', 'error'] }]
   }
 };
