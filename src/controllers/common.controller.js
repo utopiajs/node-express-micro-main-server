@@ -1,4 +1,6 @@
 const formidable = require('formidable');
+const { userService } = require('../services');
+const { getIdByHeaderUser } = require('../utils/common');
 const catchAsync = require('../utils/catchAsync');
 const handleResponse = require('../utils/common-response');
 const { commonService } = require('../services');
@@ -33,6 +35,11 @@ const uploadAvatar = async (req, res, next) => {
       file: files.file
     };
     const data = await commonService.uploadAvatarToOSS(param);
+    // 更新用户 avatar
+    const userId = getIdByHeaderUser(req.headers.user);
+    await userService.updateUserById(userId, {
+      avatar: data.url
+    });
     res.json(handleResponse(data));
   });
 };

@@ -34,6 +34,7 @@ router.get(
         }
 
         request.headers.Authorization = `Bearer ${getCookie('token')}`;
+        request.headers.User = `usercode:${getCookie('id')}`;
         return request;
       }
     }
