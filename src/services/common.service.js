@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const xml2js = require('xml2js');
+const { v4: uuidv4 } = require('uuid');
 const request = require('../utils/request');
 const ApiError = require('../utils/ApiError');
 const uploadToOSS = require('../utils/uploadToOSS');
@@ -35,7 +36,7 @@ const getStaticBingImage = async (params) => {
 const uploadAvatarToOSS = async (params) => {
   const res = await uploadToOSS({
     localFile: params.file.filepath,
-    key: `avatar/${new Date().getTime()}.${params.file.originalFilename}`
+    key: `avatar/${uuidv4()}`
   });
   return res;
 };

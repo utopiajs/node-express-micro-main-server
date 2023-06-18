@@ -1,5 +1,6 @@
 const qiniu = require('qiniu');
 const fs = require('fs');
+const { AVATAR_OSS_SPACE, AVATAR_OSS_SPACE_DOMAIN } = require('../constants/oss');
 const config = require('../config/config');
 
 const { accessKey, secretKey } = config.oss;
@@ -7,7 +8,7 @@ const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
 // 自定义凭证有效期（示例2小时，expires单位为秒，为上传凭证的有效时间）
 const options = {
-  scope: 'oss-utopia-space-sea',
+  scope: AVATAR_OSS_SPACE,
   returnBody: '{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"name":"$(fname)"}',
   expires: 7200
 };
@@ -34,7 +35,10 @@ const uploadToOSS = ({ key, localFile }) => {
         }
       });
       if (respInfo.statusCode === 200) {
-        reslove(respBody);
+        reslove({
+          url: `${AVATAR_OSS_SPACE_DOMAIN}/${respBody.key}`,
+          size: respBody.fsize
+        });
       } else {
         reject(respBody);
       }
