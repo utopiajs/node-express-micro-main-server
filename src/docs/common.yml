@@ -52,7 +52,11 @@ tags:
                 format: binary
                 required: true
     responses:
-      200:
-        description: 文件上传成功
-      400:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRes'
+      '400':
         description: 请求参数错误

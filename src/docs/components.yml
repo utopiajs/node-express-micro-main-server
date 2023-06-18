@@ -74,7 +74,18 @@ components:
           type: string
         wp:
           type: string
-        
+
+    UploadRes:
+      type: object  
+      properties:
+        url:
+          type: string
+        size:
+          type: number 
+      example:
+        url: qiniu-cdn.utopiajs.space/avatar/61ba31c5-bcba-43b8-b399-28e31f8530fb
+        size: 6108
+  
     Error:
       type: object
       properties:
