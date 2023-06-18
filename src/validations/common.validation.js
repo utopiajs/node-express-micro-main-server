@@ -7,6 +7,13 @@ const getBingImg = {
   })
 };
 
+const avatarUpload = {
+  body: Joi.object().keys({
+    file: Joi.required()
+  })
+};
+
 module.exports = {
-  getBingImg
+  getBingImg,
+  avatarUpload
 };

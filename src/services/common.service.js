@@ -3,7 +3,11 @@ const xml2js = require('xml2js');
 const request = require('../utils/request');
 const ApiError = require('../utils/ApiError');
 const uploadToOSS = require('../utils/uploadToOSS');
-const { THIRD_PARTY_SERVICE_EXCEPTION_MESSAGE, ERROR_SERVICE_EXCEPTION_CODE, MODULE_CODE } = require('../constants/error-code');
+const {
+  THIRD_PARTY_SERVICE_EXCEPTION_MESSAGE,
+  ERROR_SERVICE_EXCEPTION_CODE,
+  COMMON_TOOL_MODULE_CODE
+} = require('../constants/error-code');
 
 const getStaticBingImage = async (params) => {
   try {
@@ -23,7 +27,7 @@ const getStaticBingImage = async (params) => {
     return result;
   } catch (error) {
     throw new ApiError(httpStatus.SERVICE_UNAVAILABLE, error.message || THIRD_PARTY_SERVICE_EXCEPTION_MESSAGE, {
-      errorCode: `${MODULE_CODE}${ERROR_SERVICE_EXCEPTION_CODE}`
+      errorCode: `${COMMON_TOOL_MODULE_CODE}${ERROR_SERVICE_EXCEPTION_CODE}`
     });
   }
 };
@@ -33,8 +37,7 @@ const uploadAvatarToOSS = async (params) => {
     localFile: params.file.filepath,
     key: `avatar/${new Date().getTime()}.${params.file.originalFilename}`
   });
-
-  return res
+  return res;
 };
 
 module.exports = {
