@@ -165,9 +165,6 @@ tags:
           schema:
             type: object
             properties:
-              userId:
-                type: string
-                description: User id
               name:
                 type: string
               email:

@@ -25,6 +25,8 @@ components:
               type: string
             borderRadius:
               type: number
+      required:
+        - preferenceSetting
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
