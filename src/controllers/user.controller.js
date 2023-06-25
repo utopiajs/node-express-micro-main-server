@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
+const { getIdByHeaderUser } = require('../utils/common');
 const { userService } = require('../services');
 const handleResponse = require('../utils/common-response');
 const { COMMON_USER_CENTER_MODULE_CODE, ERROR_RES_NOT_FOUND_CODE } = require('../constants/error-code');
@@ -29,12 +30,12 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
-  const user = await userService.updateUserById(req.body.userId, req.body);
+  const user = await userService.updateUserById(getIdByHeaderUser(req.headers.user), req.body);
   res.send(handleResponse(user));
 });
 
 const deleteUser = catchAsync(async (req, res) => {
-  await userService.deleteUserById(req.body.userId);
+  await userService.deleteUserById(getIdByHeaderUser(req.headers.user));
   res.status(httpStatus.NO_CONTENT).send(handleResponse());
 });
 

@@ -72,7 +72,11 @@ const updateUserById = async (userId, updateBody) => {
     });
   }
   // hack preferenceSetting
-  const _preferenceSetting = Object.assign(user.preferenceSetting, updateBody.preferenceSetting);
+  let _preferenceSetting = user.preferenceSetting;
+  if (updateBody.preferenceSetting) {
+    _preferenceSetting = Object.assign(user.preferenceSetting, updateBody.preferenceSetting);
+    user.markModified('preferenceSetting');
+  }
   Object.assign(user, updateBody, { preferenceSetting: _preferenceSetting });
   await user.save();
   return user;

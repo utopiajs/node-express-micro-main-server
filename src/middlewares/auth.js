@@ -1,6 +1,7 @@
 const passport = require('passport');
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
+const { getIdByHeaderUser } = require('../utils/common');
 const { roleRights } = require('../config/roles');
 const { COMMON_AUTH_MODULE_CODE, ERROR_UNAUTHENTICATE_CODE, ERROR_FORBIDDEN_CODE } = require('../constants/error-code');
 
@@ -17,7 +18,7 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
   if (requiredRights.length) {
     const userRights = roleRights.get(user.role);
     const hasRequiredRights = requiredRights.every((requiredRight) => userRights.includes(requiredRight));
-    if (!hasRequiredRights && req.query.userId !== user.id) {
+    if (!hasRequiredRights && getIdByHeaderUser(req.headers.user) !== user.id) {
       return reject(
         new ApiError(httpStatus.FORBIDDEN, 'Forbidden', {
           errorCode: `${COMMON_AUTH_MODULE_CODE}${ERROR_FORBIDDEN_CODE}`
