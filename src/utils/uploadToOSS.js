@@ -36,7 +36,7 @@ const uploadToOSS = ({ key, localFile }) => {
       });
       if (respInfo.statusCode === 200) {
         reslove({
-          url: `${AVATAR_OSS_SPACE_DOMAIN}/${respBody.key}`,
+          url: `http://${AVATAR_OSS_SPACE_DOMAIN}/${respBody.key}`,
           size: respBody.fsize
         });
       } else {
