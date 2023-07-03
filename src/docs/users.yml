@@ -94,10 +94,10 @@ tags:
       - bearerAuth: []
     parameters:
       - in: query
-        name: name
+        name: search
         schema:
           type: string
-        description: User name
+        description: User name or email
       - in: query
         name: role
         schema:
@@ -109,14 +109,14 @@ tags:
           type: string
         description: sort by query in the form of field:desc/asc (ex. name:asc)
       - in: query
-        name: limit
+        name: pageSize
         schema:
           type: integer
           minimum: 1
         default: 10
-        description: Maximum number of users
+        description: page size
       - in: query
-        name: page
+        name: pageNum
         schema:
           type: integer
           minimum: 1
