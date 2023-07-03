@@ -36,12 +36,8 @@ const paginate = (schema) => {
     const pageNum = options.pageNum && parseInt(options.pageNum, 10) > 0 ? parseInt(options.pageNum, 10) : 1;
     const skip = (pageNum - 1) * pageSize;
 
-    const userListQuery = {
-      $or: [{ name: { $regex: filter.search ?? '', $options: 'i' } }, { email: { $regex: filter.search ?? '', $options: 'i' } }]
-    };
-
-    const countPromise = this.countDocuments(userListQuery).exec();
-    let docsPromise = this.find(userListQuery).sort(sort).skip(skip).limit(pageSize);
+    const countPromise = this.countDocuments(filter).exec();
+    let docsPromise = this.find(filter).sort(sort).skip(skip).limit(pageSize);
 
     if (options.populate) {
       options.populate.split(',').forEach((populateOption) => {

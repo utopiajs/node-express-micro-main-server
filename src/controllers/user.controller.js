@@ -15,7 +15,17 @@ const createUser = catchAsync(async (req, res) => {
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['search', 'role']);
   const options = pick(req.query, ['sortBy', 'pageSize', 'pageNum']);
-  const result = await userService.queryUsers(filter, options);
+
+  // 处理 search 字段
+  const userListQuery = {
+    $or: [{ name: { $regex: filter.search ?? '', $options: 'i' } }, { email: { $regex: filter.search ?? '', $options: 'i' } }]
+  };
+
+  // 处理 role
+  if (filter.role) {
+    userListQuery.role = { $eq: filter.role };
+  }
+  const result = await userService.queryUsers(userListQuery, options);
   res.send(handleResponse(result));
 });
 
