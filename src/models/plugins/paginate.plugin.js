@@ -37,7 +37,7 @@ const paginate = (schema) => {
     const skip = (pageNum - 1) * pageSize;
 
     const userListQuery = {
-      $or: [{ name: { $regex: filter.search, $options: 'i' } }, { email: { $regex: filter.search, $options: 'i' } }]
+      $or: [{ name: { $regex: filter.search ?? '', $options: 'i' } }, { email: { $regex: filter.search ?? '', $options: 'i' } }]
     };
 
     const countPromise = this.countDocuments(userListQuery).exec();
