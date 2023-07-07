@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
@@ -6,6 +7,10 @@ const {
   COMMON_USER_CENTER_MODULE_CODE,
   ERROR_RES_NOT_FOUND_CODE
 } = require('../constants/error-code');
+
+const {
+  Types: { ObjectId }
+} = mongoose;
 
 /**
  * Create a user
@@ -87,15 +92,15 @@ const updateUserById = async (userId, updateBody) => {
  * @param {ObjectId} userId
  * @returns {Promise<User>}
  */
-const deleteUserById = async (userId) => {
-  const user = await getUserById(userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found', {
-      errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_RES_NOT_FOUND_CODE}`
-    });
-  }
-  await user.remove();
-  return user;
+const deleteUserById = async (userIds) => {
+  const objectIds = userIds.map((id) => ObjectId(id));
+  await User.deleteMany({ _id: { $in: objectIds } }, (err) => {
+    if (err) {
+      throw new ApiError(httpStatus.NOT_FOUND, err, {
+        errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_RES_NOT_FOUND_CODE}`
+      });
+    }
+  });
 };
 
 module.exports = {

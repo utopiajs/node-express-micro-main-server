@@ -45,7 +45,7 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const deleteUser = catchAsync(async (req, res) => {
-  await userService.deleteUserById(req.body.userId);
+  await userService.deleteUserById(req.body.userIds);
   res.send(handleResponse());
 });
 
