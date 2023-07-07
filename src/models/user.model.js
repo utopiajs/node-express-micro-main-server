@@ -30,9 +30,7 @@ const userSchema = mongoose.Schema(
       minlength: 8,
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error(
-            'Password must contain at least one letter and one number'
-          );
+          throw new Error('Password must contain at least one letter and one number');
         }
       },
       private: true // used by the toJSON plugin
@@ -76,6 +74,17 @@ userSchema.plugin(paginate);
  */
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
+/**
+ * Check if name is taken
+ * @param {string} name - The user's name
+ * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
+ * @returns {Promise<boolean>}
+ */
+userSchema.statics.isNameTaken = async function (name, excludeUserId) {
+  const user = await this.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') }, _id: { $ne: excludeUserId } });
   return !!user;
 };
 

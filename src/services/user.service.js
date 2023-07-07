@@ -5,7 +5,8 @@ const ApiError = require('../utils/ApiError');
 const {
   ERROR_EMAIL_REPEATED_CODE,
   COMMON_USER_CENTER_MODULE_CODE,
-  ERROR_RES_NOT_FOUND_CODE
+  ERROR_RES_NOT_FOUND_CODE,
+  ERROR_NAME_REPEATED_CODE
 } = require('../constants/error-code');
 
 const {
@@ -18,6 +19,11 @@ const {
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
+  if (await User.isNameTaken(userBody.name)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Name already taken', {
+      errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_NAME_REPEATED_CODE}`
+    });
+  }
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken', {
       errorCode: `${COMMON_USER_CENTER_MODULE_CODE}${ERROR_EMAIL_REPEATED_CODE}`
