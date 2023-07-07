@@ -225,11 +225,12 @@ tags:
           schema:
             type: object
             properties:
-              userId:
-                type: string
-                description: User id
+              userIds:
+                type: array
+                items:
+                  type: string
             example:
-              userId: 642457851f3d344b7c8e437a
+              userIds: []
     responses:
       '200':
         description: No content
